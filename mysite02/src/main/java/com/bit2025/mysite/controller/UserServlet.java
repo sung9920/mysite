@@ -97,7 +97,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			///////////////////////////
-			
+
 			String name = request.getParameter("name");
 			String password = request.getParameter("password");
 			String gender = request.getParameter("gender");
@@ -111,10 +111,11 @@ public class UserServlet extends HttpServlet {
 			vo.setId(id);
 			new UserDao().update(vo);
 			
-			UserVo updatedUser = new UserDao().findById(id);
-			session.setAttribute("authUser", updatedUser);
+			authUser.setName(name);
 			
-			response.sendRedirect(request.getContextPath());
+			session.setAttribute("authUser", authUser);
+			
+			response.sendRedirect(request.getContextPath() + "/user?a=updateform");
 		} else {
 			response.sendRedirect(request.getContextPath());
 		}
