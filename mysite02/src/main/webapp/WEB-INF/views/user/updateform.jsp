@@ -24,7 +24,7 @@
 					<input id="name" name="name" type="text" value="<%=userVo.getName() %>">
 
 					<label class="block-label" for="email">이메일</label>
-					<h4><%=userVo.getEmail() %></h4>
+					<h4><!-- ${userVo.getEmail()} --><%=userVo.getEmail() %></h4>
 					
 					<label class="block-label">비밀번호</label>
 					<input name="password" type="password" value="">
