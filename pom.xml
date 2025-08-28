@@ -22,7 +22,7 @@
 	</build>
 
 	<modules>
-		<module>mysite</module>
+		<module>mysite02</module>
 	</modules>
 
 </project>
