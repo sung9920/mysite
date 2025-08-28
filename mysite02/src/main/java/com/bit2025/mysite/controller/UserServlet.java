@@ -16,24 +16,24 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("a");
-		
+
 		if("joinform".equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp").forward(request, response);
 		} else if("join".equals(action)) {
-			
+
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			String gender = request.getParameter("gender");
-			
+
 			UserVo vo = new UserVo();
 			vo.setName(name);
 			vo.setEmail(email);
 			vo.setPassword(password);
 			vo.setGender(gender);
-			
+
 			new UserDao().insert(vo);
-			
+
 			response.sendRedirect(request.getContextPath() + "/user?a=joinsuccess");
 		} else if("joinsuccess".equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp").forward(request, response);
@@ -42,19 +42,19 @@ public class UserServlet extends HttpServlet {
 		} else if("login".equals(action)) {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			
+
 			UserVo authUser = new UserDao().findByEmailAndPassword(email, password);
-			
+
 			if(authUser == null) {
 				request.setAttribute("email", email);
 				request.getRequestDispatcher("/WEB-INF/views/user/loginform.jsp").forward(request, response);
 				return;
 			}
-			
+
 			// 로그인처리 (세션처리)
 			HttpSession session = request.getSession(true);
 			session.setAttribute("authUser", authUser);
-			
+
 			response.sendRedirect(request.getContextPath());
 		} else if("logout".equals(action)) {
 			HttpSession session = request.getSession();
@@ -63,7 +63,7 @@ public class UserServlet extends HttpServlet {
 				session.removeAttribute("authUser");
 				session.invalidate();
 			}
-			
+
 			response.sendRedirect(request.getContextPath());
 		} else if("updateform".equals(action)) {
 			// Access Control
@@ -78,7 +78,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			///////////////////////////
-			
+
 			Long id = authUser.getId();
 			 UserVo userVo = new UserDao().findById(id);
 			 request.setAttribute("userVo", userVo);
@@ -102,19 +102,19 @@ public class UserServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			String gender = request.getParameter("gender");
 			Long id = Long.parseLong(request.getParameter("id"));
-			
+
 			UserVo vo = new UserVo();
-			
+
 			vo.setName(name);
 			vo.setPassword(password);
 			vo.setGender(gender);
 			vo.setId(id);
 			new UserDao().update(vo);
-			
+
 			authUser.setName(name);
-			
+
 			session.setAttribute("authUser", authUser);
-			
+
 			response.sendRedirect(request.getContextPath() + "/user?a=updateform");
 		} else {
 			response.sendRedirect(request.getContextPath());
