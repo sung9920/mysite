@@ -17,8 +17,8 @@
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value=""> <input
-						type="submit" value="찾기">
+					<input type="text" id="kwd" name="kwd" value="">
+					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -30,11 +30,9 @@
 						<th>&nbsp;</th>
 					</tr>
 
-					<c:set var="count" value="${fn:length(list) }" />
 					<c:forEach items="${list }" var="vo" varStatus="status">
-
 					<tr>
-						<td>${count - status.index}</td>
+						<td>${vo.id}</td>
 						<td style="text-align:left; padding-left:${(vo.depth-1) * 20}px">
 							<c:if test="${vo.o_no >= 2 }">
 							<img src="${pageContext.request.contextPath }/assets/images/reply.png">
@@ -51,32 +49,32 @@
 						</td>
 					</tr>
 					</c:forEach>
-<!--
-					<tr>
-						<td>1</td>
-						<td style="text-align:left; padding-left:${(2-1) * 20}px">
-						    <img src="${pageContext.request.contextPath }/assets/images/reply.png">
-							<a href="">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td>&nbsp;</td>
-					</tr>
--->
 				</table>
 
 				<!-- pager 추가 -->
 				<div class="pager">
+
 					<ul>
 						<c:if test="${page > 1}">
-							<li><a href="?page=${page - 1}">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?page=${page - 1}">◀</a></li>
 						</c:if>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+
+						<c:forEach begin="1" end="5" step="1" var="i">
+						<li class="${i == page ? 'selected' : ''}">
+
+						<c:choose>
+    						<c:when test="${i <= endPage}">
+								<a href="${pageContext.request.contextPath }/board?page=${i }">${i }</a>
+							</c:when>
+							<c:otherwise>
+								<span>${i }</span>
+							</c:otherwise>
+						</c:choose>
+</li>
+						</c:forEach>
+						<c:if test="${page <= endPage}">
+							<li><a href="${pageContext.request.contextPath }/board?page=${page + 1}">▶</a></li>
+						</c:if>
 					</ul>
 				</div>
 

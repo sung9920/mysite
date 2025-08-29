@@ -145,8 +145,19 @@ public class BoardServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/board");
 
 		} else {
+			int page = 1;
+			try {
+			    page = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException e) {
+			    page = 1;
+			}
+			int totalCnt = new BoardDao().count();
+			int endPage = (totalCnt%5 == 0 ? totalCnt/5 : (totalCnt/5) + 1);
 
-			List<BoardVo> list = new BoardDao().findAll();
+			request.setAttribute("page", page);
+			request.setAttribute("endPage", endPage);
+
+			List<BoardVo> list = new BoardDao().findAll(page);
 			request.setAttribute("list", list);
 
 			request.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(request, response);

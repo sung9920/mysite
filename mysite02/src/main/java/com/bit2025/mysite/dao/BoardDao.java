@@ -73,7 +73,7 @@ public class BoardDao {
 
 
 
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(int page) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
 
 		PreparedStatement pstmt = null;
@@ -85,8 +85,10 @@ public class BoardDao {
 			String sql = "select a.id, title, contents, hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name "
 						+ "from board a, user b "
 						+ "where a.user_id = b.id "
-						+ "order by g_no desc, o_no asc;";
+						+ "order by g_no desc, o_no asc "
+						+ "limit ?, 5;";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, (page-1)*5);
 
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -196,6 +198,26 @@ public class BoardDao {
 
 		return result;
 
+	}
+
+	public int count() {
+		int result = 0;
+
+		try (
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement("select count(*) from board;");
+		) {
+
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			 System.out.println("error:" + e);
+		}
+
+		return result;
 	}
 
 	private Connection getConnection() throws SQLException {
