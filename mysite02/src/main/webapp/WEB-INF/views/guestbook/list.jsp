@@ -2,7 +2,7 @@
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<% pageContext.setAttribute("newLine", "\n"); %>
 <html>
 <head>
 <title>mysite</title>
@@ -43,7 +43,7 @@
 								</tr>
 								<tr>
 									<td colspan=4>
-										${vo.message }
+										${fn:replace(vo.message, newLine, "<br>") }
 									</td>
 								</tr>
 							</table>

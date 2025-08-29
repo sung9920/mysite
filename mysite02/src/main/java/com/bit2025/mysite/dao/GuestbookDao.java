@@ -11,10 +11,10 @@ import java.util.List;
 import com.bit2025.mysite.vo.GuestbookVo;
 
 public class GuestbookDao {
-	
+
 	public int deleteByIdAndPassword(Long id, String password) {
 		int result = 0;
-		
+
 		try (
 			Connection con = getConnection();
 			PreparedStatement pstmt = con.prepareStatement("delete from guestbook where id = ? and password = ?;");
@@ -25,13 +25,13 @@ public class GuestbookDao {
 		} catch (SQLException e) {
 			 System.out.println("error:" + e);
 		}
-		
-		return result;		
+
+		return result;
 	}
-	
+
 	public int insert(GuestbookVo vo) {
 		int result = 0;
-		
+
 		try (
 			Connection con = getConnection();
 			PreparedStatement pstmt = con.prepareStatement("insert into guestbook(name, password, message, reg_date) values (?, ?, ?, now())");
@@ -39,12 +39,12 @@ public class GuestbookDao {
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getMessage());
-			
+
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			 System.out.println("error:" + e);
 		}
-		
+
 		return result;
 	}
 
@@ -54,26 +54,26 @@ public class GuestbookDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = getConnection();
-			
+
 			String sql = "select id, name, message, date_format(reg_date, '%Y-%m-%d %h:%i:%s') from guestbook order by id desc";
 			pstmt = con.prepareStatement(sql);
-			
+
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Long id = rs.getLong(1);
 				String name = rs.getString(2);
 				String message = rs.getString(3);
 				String reg_date = rs.getString(4);
-				
+
 				GuestbookVo vo = new GuestbookVo();
 				vo.setId(id);
 				vo.setName(name);
 				vo.setMessage(message);
 				vo.setRegDate(reg_date);
-				
+
 				result.add(vo);
 			}
 		} catch (SQLException e) {
@@ -93,22 +93,23 @@ public class GuestbookDao {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return result;
-	}	
-	
+	}
+
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
-		
+
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			
+
 			String url  = "jdbc:mariadb://192.168.0.176:3306/webdb";
 			con =  DriverManager.getConnection (url, "webdb", "webdb");
 		} catch(ClassNotFoundException ex) {
 			System.out.println("Driver Class Not Found");
 		}
-		
-		return con;		
+
+		return con;
 	}
+
 }
