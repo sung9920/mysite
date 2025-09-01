@@ -152,10 +152,12 @@ public class BoardServlet extends HttpServlet {
 			    page = 1;
 			}
 			int totalCnt = new BoardDao().count();
+			int startPage = ((page-1) / 5 * 5 ) + 1;
 			int endPage = (totalCnt%5 == 0 ? totalCnt/5 : (totalCnt/5) + 1);
 
 			request.setAttribute("page", page);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("startPage", startPage);
 
 			List<BoardVo> list = new BoardDao().findAll(page);
 			request.setAttribute("list", list);

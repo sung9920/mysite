@@ -59,7 +59,7 @@
 							<li><a href="${pageContext.request.contextPath }/board?page=${page - 1}">◀</a></li>
 						</c:if>
 
-						<c:forEach begin="1" end="5" step="1" var="i">
+						<c:forEach begin="${startPage }" end="${startPage + 4 }" step="1" var="i">
 						<li class="${i == page ? 'selected' : ''}">
 
 						<c:choose>
@@ -72,7 +72,7 @@
 						</c:choose>
 </li>
 						</c:forEach>
-						<c:if test="${page <= endPage}">
+						<c:if test="${page < endPage}">
 							<li><a href="${pageContext.request.contextPath }/board?page=${page + 1}">▶</a></li>
 						</c:if>
 					</ul>
