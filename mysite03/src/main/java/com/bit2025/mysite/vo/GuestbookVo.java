@@ -2,10 +2,11 @@ package com.bit2025.mysite.vo;
 
 public class GuestbookVo {
 	private Long id;
-	private String Name;
+	private String name;
 	private String password;
-	private String message;
 	private String regDate;
+	private String message;
+	
 	public Long getId() {
 		return id;
 	}
@@ -13,10 +14,10 @@ public class GuestbookVo {
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public String getPassword() {
 		return password;
@@ -24,23 +25,23 @@ public class GuestbookVo {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
 	public String getRegDate() {
 		return regDate;
 	}
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	@Override
-	public String toString() {
-		return "GuestbookVo [id=" + id + ", Name=" + Name + ", password=" + password + ", message=" + message
-				+ ", regDate=" + regDate + "]";
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
+	@Override
+	public String toString() {
+		return "GuestbookVo [id=" + id + ", name=" + name + ", password=" + password + ", regDate=" + regDate
+				+ ", message=" + message + "]";
+	}
 	
 }

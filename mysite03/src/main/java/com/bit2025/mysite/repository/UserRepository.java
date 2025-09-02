@@ -16,9 +16,14 @@ public class UserRepository {
 	public int insert(UserVo vo) {
 		int result = 0;
 
-		try (Connection con = getConnection();
-				PreparedStatement pstmt = con.prepareStatement(
-						" insert into user(name, email, password, gender, join_date) values (?, ?, password(?), ?, curdate())");) {
+		try (
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement(
+				" insert" +
+				"   into user(name, email, password, gender, join_date)" +
+				" values (?, ?, password(?), ?, current_date)"
+			);
+		){
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getEmail());
 			pstmt.setString(3, vo.getPassword());
@@ -26,24 +31,51 @@ public class UserRepository {
 
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			 System.out.println("error:" + e);
 		}
 
 		return result;
+	}
 
+	public UserVo findById(Long id) {
+		UserVo result = null;
+
+		try (
+			Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("select id, name, email, gender from user where id = ?");
+		) {
+
+			pstmt.setLong(1, id);
+
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = new UserVo();
+
+				result.setId(rs.getLong(1));
+				result.setName(rs.getString(2));
+				result.setEmail(rs.getString(3));
+				result.setGender(rs.getString(4));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		}
+
+		return result;
 	}
 
 	public UserVo findByEmailAndPassword(String email, String password) {
 		UserVo result = null;
 
-		try (Connection con = getConnection();
-				PreparedStatement pstmt = con
-						.prepareStatement("select id, name from user where email = ? and password = password(?);");) {
+		try (
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement("select id, name from user where email = ? and password = password(?)");
+		) {
 			pstmt.setString(1, email);
 			pstmt.setString(2, password);
 
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
+			if(rs.next()) {
 				Long id = rs.getLong(1);
 				String name = rs.getString(2);
 
@@ -53,35 +85,9 @@ public class UserRepository {
 			}
 
 			rs.close();
+
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-
-		return result;
-	}
-
-	public UserVo findById(Long id) {
-		UserVo result = null;
-
-		try (Connection con = getConnection();
-				PreparedStatement pstmt = con.prepareStatement("select name, email, gender from user where id = ?;");) {
-			pstmt.setLong(1, id);
-
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-				String name = rs.getString(1);
-				String email = rs.getString(2);
-				String gender = rs.getString(3);
-
-				result = new UserVo();
-				result.setName(name);
-				result.setEmail(email);
-				result.setGender(gender);
-			}
-
-			rs.close();
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			 System.out.println("error:" + e);
 		}
 
 		return result;
@@ -90,39 +96,28 @@ public class UserRepository {
 	public int update(UserVo vo) {
 		int result = 0;
 
-		if (vo.getPassword() != "") {
-
-			try (Connection con = getConnection();
-
-					PreparedStatement pstmt = con.prepareStatement(
-							" update user set name = ?, password = password(?), gender = ? where id = ?;");) {
-				pstmt.setString(1, vo.getName());
-				pstmt.setString(2, vo.getPassword());
-				pstmt.setString(3, vo.getGender());
-				pstmt.setLong(4, vo.getId());
-
-				result = pstmt.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
+		try (
+			Connection conn = getConnection();
+			PreparedStatement pstmt1 = conn.prepareStatement("update user set name=?, gender=? where id=?");
+			PreparedStatement pstmt2 = conn.prepareStatement("update user set name=?, password=password(?), gender=? where id=?");
+		) {
+			if("".equals(vo.getPassword())) {
+				pstmt1.setString(1, vo.getName());
+				pstmt1.setString(2, vo.getGender());
+				pstmt1.setLong(3, vo.getId());
+				result = pstmt1.executeUpdate();
+			} else {
+				pstmt2.setString(1, vo.getName());
+				pstmt2.setString(2, vo.getPassword());
+				pstmt2.setString(3, vo.getGender());
+				pstmt2.setLong(4, vo.getId());
+				result = pstmt2.executeUpdate();
 			}
-
-			return result;
-		} else {
-			try (Connection con = getConnection();
-
-					PreparedStatement pstmt = con.prepareStatement(
-							" update user set name = ?, gender = ? where id = ?;");) {
-				pstmt.setString(1, vo.getName());
-				pstmt.setString(2, vo.getGender());
-				pstmt.setLong(3, vo.getId());
-
-				result = pstmt.executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-
-			return result;
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
 		}
+
+		return result;
 	}
 
 	private Connection getConnection() throws SQLException {
@@ -131,12 +126,15 @@ public class UserRepository {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 
-			String url = "jdbc:mariadb://192.168.0.176:3306/webdb";
-			con = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException ex) {
+			String url  = "jdbc:mariadb://192.168.0.176:3306/webdb";
+			con =  DriverManager.getConnection (url, "webdb", "webdb");
+		} catch(ClassNotFoundException ex) {
 			System.out.println("Driver Class Not Found");
 		}
 
 		return con;
 	}
+
+
 }
+

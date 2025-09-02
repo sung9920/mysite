@@ -3,18 +3,19 @@
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% pageContext.setAttribute("newLine", "\n"); %>
+<!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
-		<c:import url="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath}/guestbook" method="post">
+				<form action="{pageContext.request.contextPath }/guestbook" method="post">
 					<input type="hidden" name="a" value="add">
 					<table>
 						<tr>
@@ -29,17 +30,18 @@
 						</tr>
 					</table>
 				</form>
+				
+				<h2>메세지를 남겨 주세요.</h2>
 				<ul>
 					<c:set var="count" value="${fn:length(list) }" />
-
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<li>
 							<table>
 								<tr>
-									<td>[${count - status.index}]</td>
+									<td>[${count-status.index }]</td>
 									<td>${vo.name }</td>
 									<td>${vo.regDate }</td>
-									<td><a href="${pageContext.request.contextPath}/guestbook?a=deleteform&id=${vo.id }">삭제</a></td>
+									<td><a href="${pageContext.request.contextPath }/guestbook?a=deleteform&id=${vo.id }">삭제</a></td>
 								</tr>
 								<tr>
 									<td colspan=4>
@@ -48,13 +50,14 @@
 								</tr>
 							</table>
 							<br>
-						</li>
+						</li>				
 					</c:forEach>
 				</ul>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
-		<c:import url="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
+
 </html>
