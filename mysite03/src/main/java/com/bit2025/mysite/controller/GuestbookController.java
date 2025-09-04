@@ -14,7 +14,7 @@ import com.bit2025.mysite.vo.GuestbookVo;
 
 @Controller
 @RequestMapping("/guestbook")
-public class GuestBookController {
+public class GuestbookController {
 
     @Autowired
     private GuestbookService guestbookService;
