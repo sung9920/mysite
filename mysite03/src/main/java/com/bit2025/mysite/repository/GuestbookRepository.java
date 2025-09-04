@@ -20,7 +20,7 @@ public class GuestbookRepository {
 
 		try (
 			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("elect id, name, message, date_format(reg_date, '%Y-%m-%d %h:%i:%s') from guestbook order by reg_date desc");
+			PreparedStatement pstmt = conn.prepareStatement("select id, name, message, date_format(reg_date, '%Y-%m-%d %h:%i:%s') from guestbook order by reg_date desc");
 			ResultSet rs = pstmt.executeQuery();
 		) {
 			while(rs.next()) {
