@@ -1,13 +1,15 @@
 package com.bit2025.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bit2025.mysite.vo.BoardVo;
@@ -15,10 +17,13 @@ import com.bit2025.mysite.vo.BoardVo;
 @Repository
 public class BoardRepository {
 
+	@Autowired
+	private DataSource dataSource;
+
 	public int insert(BoardVo vo) {
 		int result = 0;
 
-		try (Connection con = getConnection();
+		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(
 						"insert into board values (null, ?, ?, 0, now(), ifnull((select max(a.g_no) from board a), 0) + 1, 1, 1, ?);");
 				) {
@@ -39,7 +44,7 @@ public class BoardRepository {
 	public BoardVo findById(Long boardId) {
 		BoardVo result = null;
 
-		try (Connection con = getConnection();
+		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement("select a.id, title, contents, g_no, o_no, depth, b.name "
 															 + "from board a, user b "
 															 + "where a.user_id = b.id "
@@ -83,7 +88,7 @@ public class BoardRepository {
 		ResultSet rs = null;
 
 		try {
-			Connection con = getConnection();
+			Connection con = dataSource.getConnection();
 
 			String sql = "select a.id, title, contents, hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name "
 						+ "from board a, user b "
@@ -129,7 +134,7 @@ public class BoardRepository {
 
 	public void updateHit(Long id) {
 
-		try (Connection con = getConnection();
+		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement("update board set hit = hit+1 where id = ?;");) {
 			pstmt.setLong(1, id);
 			pstmt.executeQuery();
@@ -142,7 +147,7 @@ public class BoardRepository {
 	public int updateBoard(BoardVo vo) {
 		int result = 0;
 
-		try (Connection con = getConnection();
+		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(
 						"update board set title = ?, contents = ? where id = ? ");
 				) {
@@ -162,7 +167,7 @@ public class BoardRepository {
 		int result = 0;
 
 		try (
-			Connection con = getConnection();
+			Connection con = dataSource.getConnection();
 			PreparedStatement pstmt = con.prepareStatement("delete from board where id = ?;");
 		) {
 			pstmt.setLong(1, id);
@@ -179,7 +184,7 @@ public class BoardRepository {
 	public int insertReply(BoardVo vo) {
 		int result = 0;
 
-		try (Connection con = getConnection();
+		try (Connection con = dataSource.getConnection();
 				PreparedStatement pstmt1 = con.prepareStatement("update board set o_no = o_no + 1 where g_no = ? and o_no > ?;");
 				PreparedStatement pstmt2 = con.prepareStatement("insert into board values (null, ?, ?, 0, now(), ?, ?+1, ?+1, ?);");
 				) {
@@ -207,7 +212,7 @@ public class BoardRepository {
 		int result = 0;
 
 		try (
-			Connection con = getConnection();
+			Connection con = dataSource.getConnection();
 			PreparedStatement pstmt = con.prepareStatement("select count(*) from board;");
 		) {
 
@@ -221,21 +226,6 @@ public class BoardRepository {
 		}
 
 		return result;
-	}
-
-	private Connection getConnection() throws SQLException {
-		Connection con = null;
-
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-
-			String url = "jdbc:mariadb://192.168.0.176:3306/webdb";
-			con = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException ex) {
-			System.out.println("Driver Class Not Found");
-		}
-
-		return con;
 	}
 
 }
