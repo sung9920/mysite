@@ -15,7 +15,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath }/guestbook" method="post">
+				<form action="${pageContext.request.contextPath }/guestbook/add" method="post">
 					<table>
 						<tr>
 							<td>이름</td><td><input type="text" name="name"></td>
@@ -29,8 +29,7 @@
 						</tr>
 					</table>
 				</form>
-
-				<h2>메세지를 남겨 주세요.</h2>
+				
 				<ul>
 					<c:set var="count" value="${fn:length(list) }" />
 					<c:forEach items="${list }" var="vo" varStatus="status">
@@ -49,7 +48,7 @@
 								</tr>
 							</table>
 							<br>
-						</li>
+						</li>				
 					</c:forEach>
 				</ul>
 			</div>
