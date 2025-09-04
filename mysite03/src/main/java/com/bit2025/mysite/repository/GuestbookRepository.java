@@ -8,27 +8,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
+import com.bit2025.mysite.exception.GuestbookRepositoryException;
 import com.bit2025.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestbookRepository {
-
-	private static final Log logger = LogFactory.getLog(GuestbookRepository.class);
-
-	public List<GuestbookVo> findAll() {
+	public List<GuestbookVo> findAll() throws GuestbookRepositoryException {
 		List<GuestbookVo> result = new ArrayList<>();
 
 		try (
 			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select id, name, message, date_format(reg_date, '%Y-%m-%d %h:%i:%s') from guestbook order by reg_date desc");
+			PreparedStatement pstmt = conn.prepareStatement("elect id, name, message, date_format(reg_date, '%Y-%m-%d %h:%i:%s') from guestbook order by reg_date desc");
 			ResultSet rs = pstmt.executeQuery();
 		) {
-			logger.info("findAll Called from Connection[" + conn + "]");
-
 			while(rs.next()) {
 				Long id = rs.getLong(1);
 				String name = rs.getString(2);
@@ -44,7 +38,7 @@ public class GuestbookRepository {
 				result.add(vo);
 			}
 		} catch (SQLException e) {
-			logger.error(e);
+			throw new GuestbookRepositoryException(e.toString());
 		}
 
 		return result;
@@ -63,7 +57,7 @@ public class GuestbookRepository {
 
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			logger.error(e);
+			throw new GuestbookRepositoryException(e.toString());
 		}
 
 		return count;
@@ -81,7 +75,7 @@ public class GuestbookRepository {
 
 			count = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			logger.error(e);
+			throw new GuestbookRepositoryException(e.toString());
 		}
 
 		return count;
@@ -96,7 +90,7 @@ public class GuestbookRepository {
 			String url = "jdbc:mariadb://192.168.0.176:3306/webdb";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
-			logger.error(e);
+			throw new GuestbookRepositoryException(e.toString());
 		}
 
 		return conn;
