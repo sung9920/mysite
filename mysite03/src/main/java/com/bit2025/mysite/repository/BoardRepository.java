@@ -40,7 +40,6 @@ public class BoardRepository {
 
 	}
 
-
 	public BoardVo findById(Long boardId) {
 		BoardVo result = null;
 
@@ -70,7 +69,7 @@ public class BoardRepository {
 				result.setDepth(depth);
 				result.setName(name);
 			}
-			rs.close();
+
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
@@ -80,25 +79,35 @@ public class BoardRepository {
 	}
 
 
-
-	public List<BoardVo> findAll(int page) {
+	public List<BoardVo> findAll(int page, String keyword) {
 		List<BoardVo> result = new ArrayList<BoardVo>();
-
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
 			Connection con = dataSource.getConnection();
-
-			String sql = "select a.id, title, contents, hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name "
+			PreparedStatement pstmt1 = con.prepareStatement(
+						"select a.id, title, contents, hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name "
 						+ "from board a, user b "
 						+ "where a.user_id = b.id "
 						+ "order by g_no desc, o_no asc "
-						+ "limit ?, 5;";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, (page-1)*5);
+						+ "limit ?, 5;");
+			PreparedStatement pstmt2= con.prepareStatement(
+						"select a.id, title, contents, hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name "
+						+ "from board a, user b "
+						+ "where a.user_id = b.id "
+						+ "and title like ? or contents like ?"
+						+ "order by g_no desc, o_no asc "
+						+ "limit ?, 5;");
+			if("".equals(keyword)) {
+				pstmt1.setInt(1, (page-1)*5);
+				rs = pstmt1.executeQuery();
+			} else {
+				pstmt2.setString(1, "%" + keyword + "%");
+				pstmt2.setString(2, "%" + keyword + "%");
+				pstmt2.setInt(3, (page-1)*5);
+				rs = pstmt2.executeQuery();
+			}
 
-			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Long id = rs.getLong(1);
 				String title = rs.getString(2);
@@ -125,6 +134,8 @@ public class BoardRepository {
 
 				result.add(vo);
 			}
+
+			rs.close();
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
@@ -208,24 +219,31 @@ public class BoardRepository {
 
 	}
 
-	public int count() {
+	public int getTotalCount(String keyword) {
 		int result = 0;
-
 		try (
-			Connection con = dataSource.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("select count(*) from board;");
-		) {
+				Connection conn = dataSource.getConnection();
+				PreparedStatement pstmt1 = conn.prepareStatement("select count(*) from board");
+				PreparedStatement pstmt2 = conn.prepareStatement("select count(*) from board where title like ? or contents like ?");
+			) {
+				ResultSet rs = null;
 
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-				result = rs.getInt(1);
+				if("".equals(keyword)) {
+					rs = pstmt1.executeQuery();
+				} else {
+					pstmt2.setString(1, "%" + keyword + "%");
+					pstmt2.setString(2, "%" + keyword + "%");
+
+					rs = pstmt2.executeQuery();
+				}
+
+				if(rs.next()) {
+					result = rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				System.out.println("error:" + e);
 			}
 
-		} catch (SQLException e) {
-			 System.out.println("error:" + e);
+			return result;
 		}
-
-		return result;
 	}
-
-}
