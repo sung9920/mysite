@@ -70,7 +70,7 @@ public class BoardService {
 
 		//3. view에서 페이지 리스트를 렌더링 하기위한 데이터 값 계산
 		int beginPage = currentBlock == 0 ? 1 : (currentBlock - 1) * PAGE_SIZE + 1;
-		int prevPage = (currentBlock > 1 ) ? (currentBlock - 1) * PAGE_SIZE : 0;
+		int prevPage = (currentBlock > 1 ) ? (currentBlock - 2) * PAGE_SIZE + 1: 0;
 		int nextPage = (currentBlock < blockCount) ? currentBlock * PAGE_SIZE + 1 : 0;
 		int endPage = (nextPage > 0) ? (beginPage - 1) + LIST_SIZE : pageCount;
 		int page = (currentPage - 1) * LIST_SIZE;

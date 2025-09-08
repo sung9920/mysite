@@ -116,7 +116,7 @@
 		]]>
 	</update>
 
-	<select id="getTotalCount" parameterType="string" resultType="int">
+	<select id="getTotalCount" parameterType="string" resultType="integer">
 		<choose>
 			<when test='keyword==""'>
 				<![CDATA[
