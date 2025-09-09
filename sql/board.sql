@@ -5,7 +5,7 @@
 desc board;
 
 -- select
-select a.id, a.title, a.contents, a.hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name from board a, user b where a.user_id = b.id order by id desc limit 0, 10;
+select a.id, a.title, a.contents, a.hit, date_format(reg_date, '%Y-%m-%d %h:%i:%s'), g_no, o_no, depth, user_id, b.name from board a, user b where a.user_id = b.id order by id desc limit 0	, 10;
 
 -- insert
 insert into board values (null, "test", "test", 0, now(), 
