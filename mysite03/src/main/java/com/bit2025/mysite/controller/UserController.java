@@ -12,7 +12,7 @@ import com.bit2025.mysite.security.AuthUser;
 import com.bit2025.mysite.service.UserService;
 import com.bit2025.mysite.vo.UserVo;
 
-import jakarta.servlet.http.HttpSession;
+//import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -70,14 +70,9 @@ public class UserController {
 		return "user/update";
 	}
 
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
-		// 접근제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		///////////////////////////////////////////////////////////
+	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 
 		userVo.setId(authUser.getId());
 		userService.updateUser(userVo);

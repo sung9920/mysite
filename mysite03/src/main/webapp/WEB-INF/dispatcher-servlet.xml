@@ -15,7 +15,12 @@
 	<aop:aspectj-autoproxy/>
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<!--  Argument Resolvers -->
+		<mvc:argument-resolvers>
+			<bean class="com.bit2025.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 
 	<!-- Tomcat의 DefaultServlet 위임 핸들러 -->
 	<mvc:default-servlet-handler/>
