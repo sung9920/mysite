@@ -28,8 +28,18 @@
     <!-- Interceptors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/user/auth"/>
+			<bean class="com.bit2025.mysite.security.LoginInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout"/>
+			<bean class="com.bit2025.mysite.security.LogoutInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/assets/**"/>
+			<mvc:exclude-mapping path="/user/auth"/>
+			<mvc:exclude-mapping path="/user/logout"/>
 			<bean class="com.bit2025.mysite.security.AuthInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

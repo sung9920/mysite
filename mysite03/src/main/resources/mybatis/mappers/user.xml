@@ -46,7 +46,7 @@
 			<otherwise>
 				<![CDATA[
 					update user
-					   set name=#{name}, password=#{password}, gender=#{gender}
+					   set name=#{name}, password=password(#{password}), gender=#{gender}
 					 where id=#{id}
 				]]>
 			</otherwise>
