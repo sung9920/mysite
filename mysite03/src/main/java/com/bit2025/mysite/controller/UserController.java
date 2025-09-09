@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bit2025.mysite.security.Auth;
+import com.bit2025.mysite.security.AuthUser;
 import com.bit2025.mysite.service.UserService;
 import com.bit2025.mysite.vo.UserVo;
 
@@ -61,14 +62,7 @@ public class UserController {
 
 	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		// 접근제어
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
-		///////////////////////////////////////////////////////////
-
+	public String update(@AuthUser UserVo authUser, Model model) {
 		Long id = authUser.getId();
 		UserVo userVo = userService.getUser(id);
 

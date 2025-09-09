@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bit2025.mysite.security.Auth;
 import com.bit2025.mysite.service.BoardService;
 import com.bit2025.mysite.vo.BoardVo;
 import com.bit2025.mysite.vo.UserVo;
@@ -97,6 +98,7 @@ public class BoardController {
 				"&kwd=" + keyword;
 	}
 
+	@Auth
 	@RequestMapping(value="/write", method=RequestMethod.GET)
 	public String write(HttpSession session) {
 		// 접근제어
