@@ -61,6 +61,11 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 
+	<!--  mvc url-resource mapping -->
+	<mvc:resources mapping="/images/**" location="file:/fileupload-uploads/" ></mvc:resources>
+
+	<!-- Multipart Resolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.bit2025.mysite.controller, com.bit2025.mysite.exception" />
