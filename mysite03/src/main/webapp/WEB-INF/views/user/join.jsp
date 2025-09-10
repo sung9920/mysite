@@ -11,14 +11,22 @@
 <script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
 $(function() {
-	$("#check-button").click(function(){
+	$("#check-button").click(function() {
 		var email = $("#email").val();
+
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailPattern.test(email)) {
+            alert("올바른 이메일 형식을 입력해 주세요.");
+            $("#email").focus();
+            return;
+        }
+
 		$.ajax({
 			url: "/mysite03/api/user/checkemail?email=" + email,
 			type: "get",
 			dataType: "json",
 			success: function(response) {
-				if(response.exist) {
+				if(response.exist){
 					alert("이메일이 존재합니다. 다른 이메일을 사용해 주세요.");
 					$("#email").val("");
 					$("#email").focus();
@@ -27,6 +35,7 @@ $(function() {
 
 				$("#check-img").show();
 				$("#check-button").hide();
+				$("#email").prop("disabled", true);
 			}
 		});
 	});

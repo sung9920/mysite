@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/checkmail")
+	@GetMapping("/checkemail")
 	public Map checkEamil(@RequestParam(value="email", required=true, defaultValue="")String email) {
 		UserVo vo = userService.getUser(email);
 		return Map.of("exist", vo != null);

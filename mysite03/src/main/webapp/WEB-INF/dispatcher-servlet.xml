@@ -10,31 +10,30 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
-	<!-- aop: auto proxy  -->
-	<aop:aspectj-autoproxy/>
+	<!-- aop : auto proxy -->
+	<aop:aspectj-autoproxy />
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
 		<!-- Message Converters -->
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-			    <property name="supportedMediaTypes">
-			        <list>
-			             <value>text/html; charset=UTF-8</value>
-			        </list>
-			    </property>
+    			<property name="supportedMediaTypes">
+        			<list>
+             			<value>text/html; charset=UTF-8</value>
+        			</list>
+    			</property>
 			</bean>
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 			   <property name="supportedMediaTypes">
-			       <list>
+					<list>
 			            <value>application/json; charset=UTF-8</value>
 			        </list>
 			   </property>
 			</bean>
 		</mvc:message-converters>
 
-		<!--  Argument Resolvers -->
+		<!-- Argument Resolvers -->
 		<mvc:argument-resolvers>
 			<bean class="com.bit2025.mysite.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
@@ -43,7 +42,7 @@
 	<!-- Tomcat의 DefaultServlet 위임 핸들러 -->
 	<mvc:default-servlet-handler/>
 
-    <!-- Interceptors -->
+	<!-- Intercetors -->
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/auth"/>
@@ -64,7 +63,7 @@
 
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.bit2025.mysite.controller" />
+	<context:component-scan base-package="com.bit2025.mysite.controller, com.bit2025.mysite.exception" />
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	   <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
