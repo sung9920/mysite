@@ -15,8 +15,8 @@ public class BoardRepository {
 	@Autowired
 	private SqlSession sqlsession;
 
-	public int insert(BoardVo boardvo) {
-		return sqlsession.insert("board.insert", boardvo);
+	public int insert(BoardVo boardVo) {
+		return sqlsession.insert("board.insert", boardVo);
 	}
 
 	public List<BoardVo> findAllByPageAndKeword(String keyword, Integer page, Integer size) {

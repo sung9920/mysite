@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bit2025.mysite.vo.UserVo;
+
 @Controller
 public class MainController {
 
@@ -22,5 +24,16 @@ public class MainController {
 	@RequestMapping("/msg02")
 	public String message02() {
 		return "헬로우 월드";
+	}
+
+	@ResponseBody
+	@RequestMapping("/msg03")
+	public UserVo message03() {
+		UserVo vo = new UserVo();
+		vo.setId(10L);
+		vo.setName("둘리");
+		vo.setEmail("dooly@gmail.com");
+
+		return vo;
 	}
 }
