@@ -33,10 +33,10 @@ public class AdminController {
 
 	@RequestMapping("/main/update")
 	public String mainUpdate(SiteVo vo, @RequestParam("file") MultipartFile multipartFile) {
-		String profileURL = fileuploadService.restore(multipartFile);
-		if(profileURL != null) {
-			vo.setProfileURL(profileURL);
-		}
+		if (!multipartFile.isEmpty()) {
+	        String profileURL = fileuploadService.restore(multipartFile);
+	        vo.setProfileURL(profileURL);
+	    }
 
 		siteService.updateSite(vo);
 
