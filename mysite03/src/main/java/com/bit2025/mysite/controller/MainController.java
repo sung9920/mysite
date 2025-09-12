@@ -1,15 +1,16 @@
 package com.bit2025.mysite.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.bit2025.mysite.vo.UserVo;
 
 @Controller
 public class MainController {
-	@RequestMapping({"/", "/main"})
-	public String index(Model model) {
+
+	@RequestMapping({"/", "main"})
+	public String index() {
 		return "main/index";
 	}
 
