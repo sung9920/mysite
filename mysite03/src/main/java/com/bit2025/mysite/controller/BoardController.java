@@ -25,13 +25,17 @@ public class BoardController {
 
 	@RequestMapping("")
 	public String index(
-		@RequestParam(value="p", defaultValue="1") Integer page,
-		@RequestParam(value="kwd", defaultValue="") String keyword,
+		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
+		@RequestParam(value="kwd", required=true, defaultValue="") String keyword,
 		Model model) {
 
 		Map<String, Object> map = boardService.getContentsList(page, keyword);
 
 		// model.addAllAttributes(map);
+		// for(String key : map.keySet()) {
+		//	model.addAttribute(key, map.get(key));
+		// }
+
 		model.addAttribute("map", map);
 		model.addAttribute("keyword", keyword);
 
@@ -50,9 +54,8 @@ public class BoardController {
 	public String delete(
 		@AuthUser UserVo authUser,
 		@PathVariable("id") Long boardId,
-		@RequestParam(value="p", defaultValue="1") Integer page,
-		@RequestParam(value="kwd", defaultValue="") String keyword) {
-
+		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
+		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 		boardService.deleteContents(boardId, authUser.getId());
 		return "redirect:/board?p=" + page + "&kwd=" + keyword;
 	}
@@ -60,7 +63,6 @@ public class BoardController {
 	@Auth
 	@RequestMapping(value="/modify/{id}", method=RequestMethod.GET)
 	public String modify(@AuthUser UserVo authUser, @PathVariable("id") Long id, Model model) {
-
 		BoardVo boardVo = boardService.getContents(id, authUser.getId());
 		model.addAttribute("boardVo", boardVo);
 		return "board/modify";
@@ -73,7 +75,6 @@ public class BoardController {
 		BoardVo boardVo,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
-
 		boardVo.setUserId(authUser.getId());
 		boardService.modifyContents(boardVo);
 		return "redirect:/board/view/" + boardVo.getId() +
@@ -92,9 +93,8 @@ public class BoardController {
 	public String write(
 		@AuthUser UserVo authUser,
 		@ModelAttribute BoardVo boardVo,
-		@RequestParam(value="p", defaultValue="1") Integer page,
-		@RequestParam(value="kwd", defaultValue="") String keyword) {
-
+		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
+		@RequestParam(value="kwd", required=true, defaultValue="") String keyword) {
 		boardVo.setUserId(authUser.getId());
 		boardService.addContents(boardVo);
 		return	"redirect:/board?p=" + page + "&kwd=" + keyword;
