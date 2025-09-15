@@ -13,7 +13,9 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public void join(UserVo userVo) {
+		System.out.println("Before Join: " + userVo);
 		userRepository.insert(userVo);
+		System.out.println("After Join:" + userVo);
 	}
 
 	public UserVo getUser(String email, String password) {
@@ -35,4 +37,6 @@ public class UserService {
 	public void updateUser(UserVo userVo) {
 		userRepository.update(userVo);
 	}
+
+
 }
