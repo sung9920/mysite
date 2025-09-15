@@ -21,6 +21,7 @@ public class BoardService {
 
 	@Transactional
 	public void addContents(BoardVo boardVo) {
+
 		if(boardVo.getGroupNo() != null) {
 			boardRepository.updateOrderNo(boardVo.getGroupNo(), boardVo.getOrderNo());
 		}
@@ -59,7 +60,7 @@ public class BoardService {
 		int blockCount = (int)Math.ceil((double)pageCount / PAGE_SIZE);
 		int currentBlock = (int)Math.ceil((double)currentPage / PAGE_SIZE);
 
-		//2. 파라미터 page 값  검증
+		//2. 파라미터 page 값 검증
 		if(currentPage > pageCount) {
 			currentPage = pageCount;
 			currentBlock = (int)Math.ceil((double)currentPage / PAGE_SIZE);
@@ -72,13 +73,12 @@ public class BoardService {
 
 		//3. view에서 페이지 리스트를 렌더링 하기위한 데이터 값 계산
 		int beginPage = currentBlock == 0 ? 1 : (currentBlock - 1) * PAGE_SIZE + 1;
-		int prevPage = (currentBlock > 1 ) ? (currentBlock - 2) * PAGE_SIZE + 1: 0;
+		int prevPage = (currentBlock > 1 ) ? (currentBlock - 1) * PAGE_SIZE : 0;
 		int nextPage = (currentBlock < blockCount) ? currentBlock * PAGE_SIZE + 1 : 0;
 		int endPage = (nextPage > 0) ? (beginPage - 1) + LIST_SIZE : pageCount;
-		int page = (currentPage - 1) * LIST_SIZE;
 
 		//4. 리스트 가져오기
-		List<BoardVo> list = boardRepository.findAllByPageAndKeword(keyword, page, LIST_SIZE);
+		List<BoardVo> list = boardRepository.findAllByPageAndKeword(keyword, currentPage, LIST_SIZE);
 
 		//5. 리스트 정보를 맵에 저장
 		Map<String, Object> map = new HashMap<String, Object>();
