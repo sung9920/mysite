@@ -69,4 +69,9 @@ public class UserController {
 
 		return "redirect:/user/update";
 	}
+
+	@RequestMapping("/auth")
+	public void auth() {
+	}
+
 }
