@@ -31,6 +31,7 @@ public class AdminController {
 		this.siteService = siteService;
 		this.fileuploadService = fileuploadService;
 		this.servletContext = servletContext;
+		this.applicationContext = applicationContext;
 	}
 
 	@RequestMapping({"", "/"})
