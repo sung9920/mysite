@@ -74,4 +74,7 @@ public class UserController {
 	public void auth() {
 	}
 
+	@RequestMapping("/logout")
+	public void logout() {
+	}
 }

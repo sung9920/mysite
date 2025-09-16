@@ -20,7 +20,7 @@ $(function() {
 		}
 
 		$.ajax({
-			url: "/mysite03/api/user/checkemail?email=" + email,
+			url: "/mysite04/api/user/checkemail?email=" + email,
 			type: "get",
 			dataType: "json",
 			success: function(response) {
