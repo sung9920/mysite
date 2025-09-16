@@ -16,7 +16,7 @@ public class UserVo {
 
 	@NotEmpty
 	@Email
-	@Pattern(regexp="/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/")
+//	@Pattern(regexp="/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/")
 	private String email;
 
 	@NotEmpty

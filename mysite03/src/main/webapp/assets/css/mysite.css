@@ -21,7 +21,6 @@ div#header	#languages a		{ display: inline-block; border: #111 2px solid; border
 div#header	#languages a + a	{ border-radius: 0 4px 4px 0 }
 div#header	#languages a.active	{ color:#eee; background-color:#111; font-weight: bold }
 
-
 /* navigation */
 div#navigation ul			{ width:118px; margin-top:1px }
 div#navigation li			{ width:118px; background-color:#E9E9E9; border:1px solid #DADADA; margin-top:-1px }
@@ -36,5 +35,3 @@ div#navigation li a:active	{ color:#4F4F4F; text-decoration:none; }
 /* footer */
 div#footer		{ background:#515151; color: #FFF }
 div#footer p	{ margin:0;padding:5px 10px }
-
-
