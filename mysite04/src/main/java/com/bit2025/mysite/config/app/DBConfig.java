@@ -17,11 +17,10 @@ public class DBConfig {
 
 	@Autowired
 	private Environment env;
-
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+		dataSource.setDriverClassName(env.getProperty("jdbc.dirverClassName"));
 		dataSource.setUrl(env.getProperty("jdbc.url"));
 		dataSource.setUsername(env.getProperty("jdbc.username"));
 		dataSource.setPassword(env.getProperty("jdbc.password"));
