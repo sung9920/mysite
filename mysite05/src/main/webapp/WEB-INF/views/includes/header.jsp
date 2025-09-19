@@ -5,18 +5,18 @@
 <script>
 window.addEventListener("load", function(){
 	var anchors = document.querySelectorAll('#languages a');
-	
+
 	anchors.forEach(function(el){
 		el.addEventListener("click", function(e) {
 			e.preventDefault();
-			document.cookie = 
-				"lang=" + this.getAttribute("data-lang") + ";" + 
-				"path=" + "${pageContext.request.contextPath}" + ";" + 
+			document.cookie =
+				"lang=" + this.getAttribute("data-lang") + ";" +
+				"path=" + "${pageContext.request.contextPath}" + ";" +
 				"max-age=" + (30*24*60*60);
-			location.reload();	
+			location.reload();
 		});
 	});
-	
+
 });
 </script>
 
@@ -32,19 +32,22 @@ window.addEventListener("load", function(){
 						<a href="" data-lang="ko">KO</a><a href="" data-lang="en" class="active">EN</a>
 					</c:otherwise>
 				</c:choose>
-			</div>			
+			</div>
 			<ul>
 				<c:choose>
 					<c:when test="${empty authUser }" >
 						<li><a href="${pageContext.request.contextPath }/user/login">로그인</a></li>
 						<li><a href="${pageContext.request.contextPath }/user/join">회원가입</a></li>
 					</c:when>
-					<c:otherwise>			
+					<c:otherwise>
+						<c:if test="${authUser.role == 'ADMIN'}">
+							<li><a href="${pageContext.request.contextPath }/admin/">관리자 페이지</a></li>
+						</c:if>
 						<li><a href="${pageContext.request.contextPath }/user/update">회원정보수정</a></li>
 						<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
 						<li>${authUser.name }님 안녕하세요 ^^;</li>
 					</c:otherwise>
-				</c:choose>	
+				</c:choose>
 			</ul>
 		</div>
 
