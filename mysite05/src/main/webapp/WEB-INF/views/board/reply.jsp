@@ -36,10 +36,10 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board/view/${boardVo.id}?p=${param.p }&kwd=${param.kwd }">취소</a>
+						<a href="${pageContext.request.contextPath }/board?p=${param.p }&kwd=${param.kwd }">취소</a>
 						<input type="submit" value="등록">
 					</div>
-				</form>
+				</form>				
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />

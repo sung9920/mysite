@@ -72,7 +72,7 @@ public class BoardVo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "BoardVo [Id=" + Id + ", title=" + title + ", contents=" + contents + ", regDate=" + regDate + ", hit="

@@ -37,7 +37,7 @@
 						<a href="${pageContext.request.contextPath }/board/view/${boardVo.id }?p=${param.p }&kwd=${param.kwd }">취소</a>
 						<input type="submit" value="수정">
 					</div>
-				</form>
+				</form>				
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />

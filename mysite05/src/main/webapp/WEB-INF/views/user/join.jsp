@@ -18,26 +18,26 @@ $(function() {
 		if(!email) {
 			return;
 		}
-
+		
 		$.ajax({
 			url: "${pageContext.request.contextPath }/api/user/checkemail?email=" + email,
 			type: "get",
 			dataType: "json",
 			success: function(response) {
 				console.log(response);
-
+				
 				if(response.result == "fail") {
 					console.error(response.message);
 					return;
 				}
-
+					
 				if(response.data){
 					alert("이메일이 존재합니다. 다른 이메일을 사용해 주세요.");
 					$("#email").val("");
 					$("#email").focus();
 					return;
 				}
-
+				
 				$("#check-img").show();
 				$("#check-button").hide();
 			},
@@ -60,7 +60,7 @@ $(function() {
 					name="joinForm"
 					method="post"
 					action="${pageContext.request.contextPath }/user/join">
-
+					
 					<label class="block-label" for="name"><spring:message code="user.join.label.name"/></label>
 					<input id="name" name="name" type="text" value="${userVo.name }">
 					<p style="padding: 0; text-align:left; color: #f00">
@@ -79,13 +79,13 @@ $(function() {
 					<p style="padding: 0; text-align:left; color: #f00">
 						<form:errors path="email" />
 					</p>
-
+					
 					<label class="block-label"><spring:message code="user.join.label.password"/></label>
 					<form:password path="password" />
 					<p style="padding: 0; text-align:left; color: #f00">
 						<form:errors path="password" />
 					</p>
-
+					
 					<spring:message code="user.join.label.gender.male" var="userJoinLabelGenderMale" />
 					<spring:message code="user.join.label.gender.female" var="userJoinLabelGenderFemale" />
 					<fieldset>
@@ -93,16 +93,16 @@ $(function() {
 						<form:radiobutton path="gender" value="female" label="${userJoinLabelGenderFemale }" checked="checked" />
 						<form:radiobutton path="gender" value="male" label="${userJoinLabelGenderMale }" />
 					</fieldset>
-
+					
 					<fieldset>
 						<legend><spring:message code="user.join.label.terms"/></legend>
 						<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
 						<label><spring:message code="user.join.label.terms.message"/></label>
 					</fieldset>
-
+					
 					<spring:message code="user.join.button.signup" var="userJoinButtonSignup" />
 					<input type="submit" value="${userJoinButtonSignup }">
-
+					
 				</form:form>
 			</div>
 		</div>

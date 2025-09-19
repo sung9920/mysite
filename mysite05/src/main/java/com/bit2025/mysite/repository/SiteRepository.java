@@ -8,11 +8,11 @@ import com.bit2025.mysite.vo.SiteVo;
 @Repository
 public class SiteRepository {
 	private SqlSession sqlSession;
-
+	
 	public SiteRepository(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
-
+	
 	public SiteVo findById(long id) {
 		return sqlSession.selectOne("site.findById", id);
 	}

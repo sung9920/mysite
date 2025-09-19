@@ -1,12 +1,9 @@
 package com.bit2025.mysite.dto;
 
 public class JsonResult {
-	private String result;  // "success" or "fail"
-	private Object data;    // if success, set
-	private String message; // if fail, set
-
-	private JsonResult() {
-	}
+	private String result; 	// "success" or "fail"
+	private Object data;   	// if success, set
+	private String message;	// if fail, set
 
 	public static JsonResult fail(String message) {
 		return new JsonResult(message);
@@ -18,10 +15,10 @@ public class JsonResult {
 
 	private JsonResult(String message) {
 		result = "fail";
-		this.message = message;
 		data = null;
+		this.message = message; 
 	}
-
+	
 	private JsonResult(Object data) {
 		result = "success";
 		this.data = data;
@@ -39,5 +36,4 @@ public class JsonResult {
 	public String getMessage() {
 		return message;
 	}
-
 }

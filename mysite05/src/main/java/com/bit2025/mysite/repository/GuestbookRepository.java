@@ -7,16 +7,14 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.bit2025.mysite.exception.GuestbookRepositoryException;
 import com.bit2025.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestbookRepository {
-
 	@Autowired
 	private SqlSession sqlSession;
-
-	public List<GuestbookVo> findAll() throws GuestbookRepositoryException {
+	
+	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
 

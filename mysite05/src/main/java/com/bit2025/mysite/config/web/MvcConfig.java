@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
-
+	
 	// View Resolvers
 	@Bean
 	public ViewResolver viewResolver() {
@@ -32,10 +32,10 @@ public class MvcConfig implements WebMvcConfigurer {
 		viewResolver.setSuffix(".jsp");
 		viewResolver.setExposeContextBeansAsAttributes(true);
 		viewResolver.setExposedContextBeanNames("site");
-
+		
 		return viewResolver;
 	}
-
+	
 	// Message Converters
 	@Bean
 	public StringHttpMessageConverter stringHttpMessageConverter() {
@@ -45,23 +45,23 @@ public class MvcConfig implements WebMvcConfigurer {
 				new MediaType("text", "html", Charset.forName("utf-8"))
 			)
 		);
-
+		
 		return messageConverter;
 	}
-
+	
 	@Bean
 	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
 				.indentOutput(true)
 				.dateFormat(new SimpleDateFormat("yyyy-mm-dd hh:MM:ss"));
-
+		
 		MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter(builder.build());
 		messageConverter.setSupportedMediaTypes(
 			Arrays.asList(
 				new MediaType("application", "json", Charset.forName("utf-8"))
 			)
 		);
-
+		
 		return messageConverter;
 	}
 
@@ -76,12 +76,12 @@ public class MvcConfig implements WebMvcConfigurer {
 	// public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 	//	configurer.enable();
 	// }
-
+	
 	// mvc url-resource mapping: static(assets)
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry
 			.addResourceHandler("/assets/**")
 			.addResourceLocations("classpath:assets/");
-	}
+	}	
 }

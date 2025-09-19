@@ -1,7 +1,7 @@
 Package 구조
 
 [src/main/java]
-|--- mysite	
+|--- com.bit2025.mysite	
 |	 |--- config
 |	 |	  |--- AppConfig.java
 |	 |	  |--- WebConfig.java
@@ -18,7 +18,7 @@ Package 구조
 |	 |--- repository
 
 [src/main/resources]
-|--- mysite
+|--- com.bit2025.mysite
 |	 |--- config
 |	 |	  |--- app
 |	 |	  |	   |--- jdbc.properties
@@ -30,5 +30,5 @@ Package 구조
 |	 |	  |--- web
 |	 |	  |	   |--- fileupload.properties
 |	 |	  |	   |--- messages
-|	 |	  |    |--- message_ko.properties
-|	 |	  |    |--- message_en.properties
+|	 |	  |    |      |--- message_ko.properties
+|	 |	  |    |      |--- message_en.properties

@@ -15,8 +15,8 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-form">
-
-					<h2>게시판 관리 페이지</h2>
+					
+					<h2>게시판 관리 페이지</h2>				
 
 				</div>
 			</div>

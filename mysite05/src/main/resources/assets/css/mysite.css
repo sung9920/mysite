@@ -13,7 +13,7 @@ div#footer		{ clear:both; width:100% }
 
 /* header */
 div#header	h1			{ float:left; height:70px; line-height:70px; margin:0; padding-left:10px; color:#79B30B }
-div#header	ul			{ clear:both; height:20px; margin:0 20px 10px 0 }
+div#header	ul			{ clear:both; height:20px; margin:0 20px 10px 0 } 	
 div#header	li			{ float:right }
 div#header	li a 			{ color:#4F4F4F; font-weight:bold; margin-left:10px; text-decoration:none; }
 div#header	#languages		{ float:right; margin:20px 20px 0 0  }
@@ -35,3 +35,5 @@ div#navigation li a:active	{ color:#4F4F4F; text-decoration:none; }
 /* footer */
 div#footer		{ background:#515151; color: #FFF }
 div#footer p	{ margin:0;padding:5px 10px }
+
+

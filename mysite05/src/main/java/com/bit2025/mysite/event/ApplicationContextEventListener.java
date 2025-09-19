@@ -12,29 +12,29 @@ import com.bit2025.mysite.vo.SiteVo;
 
 public class ApplicationContextEventListener {
 	private ApplicationContext applicationContext;
-
+	
 	public ApplicationContextEventListener(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-
+	
 	@EventListener({ContextRefreshedEvent.class})
 	public void handlerContextRefreshedEvent() {
 		System.out.println("-- Context Refreshed Event Received --");
-
+		
 		SiteService siteService = applicationContext.getBean(SiteService.class);
 		SiteVo vo = siteService.getSite();
-
+		
 		MutablePropertyValues propertyValues = new MutablePropertyValues();
 		propertyValues.add("id", vo.getId());
 		propertyValues.add("title", vo.getTitle());
 		propertyValues.add("welcomeMessage", vo.getWelcomeMessage());
 		propertyValues.add("description", vo.getDescription());
 		propertyValues.add("profileURL", vo.getProfileURL());
-
+		
 		GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
 		beanDefinition.setBeanClass(SiteVo.class);
 		beanDefinition.setPropertyValues(propertyValues);
-
+		
 		BeanDefinitionRegistry registry = (BeanDefinitionRegistry)applicationContext.getAutowireCapableBeanFactory();
 		registry.registerBeanDefinition("site", beanDefinition);
 	}

@@ -15,9 +15,9 @@ import com.bit2025.mysite.vo.UserVo;
 public class UserController {
 	@Autowired
 	private UserService userService;
-
+	
 	@GetMapping("/checkemail")
-	public JsonResult checkEmail(@RequestParam(value="email", defaultValue="")String email) {
+	public JsonResult checkEmail(@RequestParam(value="email", required=true, defaultValue="")String email) {
 		UserVo vo = userService.getUser(email);
 		return JsonResult.success(vo != null);
 	}

@@ -6,7 +6,7 @@ public class SiteVo {
 	private String welcomeMessage;
 	private String profileURL;
 	private String description;
-
+	
 	public Long getId() {
 		return id;
 	}

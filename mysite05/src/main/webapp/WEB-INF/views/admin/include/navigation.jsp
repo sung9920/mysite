@@ -28,8 +28,8 @@
 							<li><a href="${pageContext.request.contextPath }/admin/guestbook">방명록 관리</a></li>
 							<li><a href="${pageContext.request.contextPath }/admin/board">게시판 관리</a></li>
 							<li class="selected"><a href="${pageContext.request.contextPath }/admin/user">사용자 관리</a></li>
-						</c:when>
-					</c:choose>
+						</c:when>												
+					</c:choose>						
 				</ul>
 			</div>
 			<div id="footer">&nbsp;</div>

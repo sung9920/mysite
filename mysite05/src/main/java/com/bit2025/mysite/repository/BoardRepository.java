@@ -49,7 +49,7 @@ public class BoardRepository {
         Map<String, Long> map = new HashMap<String, Long>();
         map.put("id", id);
         map.put("userId", userid);
-
+        
         return sqlSession.selectOne("board.findByIdAndUserId", map);
     }
 
