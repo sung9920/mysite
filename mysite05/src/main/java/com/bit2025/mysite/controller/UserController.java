@@ -1,6 +1,11 @@
 package com.bit2025.mysite.controller;
 
+import java.security.Security;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bit2025.mysite.security.AuthUser;
 import com.bit2025.mysite.service.UserService;
 import com.bit2025.mysite.vo.UserVo;
 
@@ -17,15 +21,15 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute UserVo userVo) {
 		return "user/join";
 	}
-	
+
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo userVo, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -33,7 +37,7 @@ public class UserController {
 			model.addAllAttributes(result.getModel());
 			return "user/join";
 		}
-		
+
 		userService.join(userVo);
 		return "redirect:/user/joinsuccess";
 	}
@@ -43,27 +47,33 @@ public class UserController {
 		return "user/joinsuccess";
 	}
 
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+	@RequestMapping(value="/login")
 	public String login() {
 		return "user/login";
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(@AuthUser UserVo authUser, Model model) {
-		Long id = authUser.getId();
+	public String update(Authentication authentication, Model model) {
+		// SecurityContextHolder (Spring Security ThreadLOcal)
+		// SecurityContext securityContext = SecurityContextHolder.getContext();
+		// authentication =  securityContext.getAuthentication();
+		// UserVo authUser = (UserVo)authentication.getPrincipal();
+
+		Long id = ((UserVo)authentication.getPrincipal()).getId();
 		UserVo userVo = userService.getUser(id);
-		
+
 		model.addAttribute("userVo", userVo);
 		return "user/update";
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(@AuthUser UserVo authUser, UserVo userVo) {
+	public String update(Authentication authentication, UserVo userVo) {
+		UserVo authUser = (UserVo)authentication.getPrincipal();
 		userVo.setId(authUser.getId());
 		userService.updateUser(userVo);
-		
+
 		authUser.setName(userVo.getName());
-		
+
 		return "redirect:/user/update";
 	}
 }
