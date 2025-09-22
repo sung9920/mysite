@@ -1,6 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% pageContext.setAttribute( "newLine", "\n" ); %>
 <!DOCTYPE html>
@@ -27,19 +28,20 @@
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-							${fn:replace(boardVo.contents, newLine, "<br>") }					
+							${fn:replace(boardVo.contents, newLine, "<br>") }
 							</div>
 						</td>
 					</tr>
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?p=${param.p }&kwd=${param.kwd }">글목록</a>
-					<c:if test="${ not empty authUser }">
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal" var="authUser"/>
 						<a href="${pageContext.request.contextPath }/board/reply/${boardVo.id }?p=${param.p }&kwd=${param.kwd }">답글 달기</a>
 						<c:if test="${authUser.id == boardVo.userId }">
 							<a href="${pageContext.request.contextPath }/board/modify/${boardVo.id }?p=${param.p }&kwd=${param.kwd }">글수정</a>
 						</c:if>
-					</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

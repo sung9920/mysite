@@ -45,28 +45,37 @@ public class SecurityConfig {
         		.usernameParameter("email")
         		.passwordParameter("password")
         		.defaultSuccessUrl("/")
+        		// 파라미터와 함께 리다이렉트 응답
+        		// .failureUrl("/user/login?result=fail")
         		.failureHandler(new AuthenticationFailureHandler() {
-
 					@Override
-					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-							AuthenticationException exception) throws IOException, ServletException {
-						String email = request.getParameter("email");
-						request.setAttribute("email", email);
+					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+						request.setAttribute("email", request.getParameter("email"));
 						request
 							.getRequestDispatcher("/user/login")
 							.forward(request, response);
 					}
-				});
+        		});
 
+        })
+        .logout(logout -> {
+        	logout
+        		.logoutUrl("/user/logout")
+        		.logoutSuccessUrl("/");
         })
     	.authorizeHttpRequests(authorizeRequest -> {
     		/* ACL */
     		authorizeRequest
-				.requestMatchers(
-						new RegexRequestMatcher("^/admin/?.*$", null),
-						new RegexRequestMatcher("^/user/update$", null),
-						new RegexRequestMatcher("^/board/?(write|delete|modify|reply).*$", null))
-				.authenticated().anyRequest().permitAll();
+				.requestMatchers(new RegexRequestMatcher("^/admin/?.*$", null))
+				.hasRole("ADMIN")
+
+				.requestMatchers(new RegexRequestMatcher("^/user/update$", null))
+				.hasAnyRole("USER", "ADMIN")
+
+				.requestMatchers(new RegexRequestMatcher("^/board/?(write|delete|modify|reply).*$", null))
+				.hasAnyRole("USER", "ADMIN")
+
+				.anyRequest().permitAll();
 
     	});
 

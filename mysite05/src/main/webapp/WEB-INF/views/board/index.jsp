@@ -1,6 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,7 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:forEach items="${map.list }"	var="vo" varStatus="status">			
+					<c:forEach items="${map.list }"	var="vo" varStatus="status">
 						<tr>
 							<td>${map.totalCount - (map.currentPage - 1)*map.listSize - status.index }</td>
 							<c:choose>
@@ -47,14 +48,17 @@
 							<td>${vo.hit }</td>
 							<td>${vo.regDate }</td>
 							<td>
-								<c:choose>
-									<c:when test="${not empty authUser && authUser.id == vo.userId }">
-										<a href="${pageContext.request.contextPath }/board/delete/${vo.id }?p=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
-									</c:when>
-									<c:otherwise>
-										&nbsp;
-									</c:otherwise>
-								</c:choose>
+								<sec:authorize access="isAuthenticated()">
+									<sec:authentication property="principal" var="authUser"/>
+									<c:choose>
+										<c:when test="${authUser.id == vo.userId }">
+											<a href="${pageContext.request.contextPath }/board/delete/${vo.id }?p=${map.currentPage }&kwd=${map.keyword }" class="del" style="background-image:url(${pageContext.request.contextPath }/assets/images/recycle.png)">삭제</a>
+										</c:when>
+										<c:otherwise>
+											&nbsp;
+										</c:otherwise>
+									</c:choose>
+								</sec:authorize>
 							</td>
 						</tr>
 					</c:forEach>
@@ -64,29 +68,32 @@
 						<c:if test="${map.prevPage > 0 }" >
 							<li><a href="${pageContext.request.contextPath }/board?p=${map.prevPage }&kwd=${map.keyword }">◀</a></li>
 						</c:if>
-						
+
 						<c:forEach begin="${map.beginPage }" end="${map.beginPage + map.listSize - 1 }" var="page">
 							<c:choose>
 								<c:when test="${map.endPage < page }">
 									<li>${page }</li>
-								</c:when> 
+								</c:when>
 								<c:when test="${map.currentPage == page }">
 									<li class="selected">${page }</li>
 								</c:when>
-								<c:otherwise> 
+								<c:otherwise>
 									<li><a href="${pageContext.request.contextPath }/board?p=${page }&kwd=${map.keyword }">${page }</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<c:if test="${map.nextPage > 0 }" >
 							<li><a href="${pageContext.request.contextPath }/board?p=${map.nextPage }&kwd=${map.keyword }">▶</a></li>
-						</c:if>	
+						</c:if>
 					</ul>
-				</div>				
+				</div>
 				<div class="bottom">
-					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board/write?p=${map.currentPage }&kwd=${map.keyword }" id="new-book">글쓰기</a>
-					</c:if>
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="principal" var="authUser"/>
+						<c:if test="${not empty authUser }">
+							<a href="${pageContext.request.contextPath }/board/write?p=${map.currentPage }&kwd=${map.keyword }" id="new-book">글쓰기</a>
+						</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</div>

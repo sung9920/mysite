@@ -1,6 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 window.addEventListener("load", function(){
@@ -34,20 +35,19 @@ window.addEventListener("load", function(){
 				</c:choose>
 			</div>
 			<ul>
-				<c:choose>
-					<c:when test="${empty authUser }" >
+				<sec:authorize access="!isAuthenticated()">
 						<li><a href="${pageContext.request.contextPath }/user/login">로그인</a></li>
 						<li><a href="${pageContext.request.contextPath }/user/join">회원가입</a></li>
-					</c:when>
-					<c:otherwise>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<sec:authentication property="principal" var="authUser"/>
 						<c:if test="${authUser.role == 'ADMIN'}">
 							<li><a href="${pageContext.request.contextPath }/admin/">관리자 페이지</a></li>
 						</c:if>
 						<li><a href="${pageContext.request.contextPath }/user/update">회원정보수정</a></li>
 						<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
 						<li>${authUser.name }님 안녕하세요 ^^;</li>
-					</c:otherwise>
-				</c:choose>
+				</sec:authorize>
 			</ul>
 		</div>
 

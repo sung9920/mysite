@@ -25,14 +25,14 @@
 	3) formLogin.passwordParameter("password")
 	4) formLogin.defaultSuccessurl('/')
 	5) failureUrl("/user/login?result=fail")
-	
+
 	6) AuthenticationManager 설정
 	7) UserDetailsServiceImpl & UserDetails 구현
 	8) 기존 UserService 수정: PasswordEncoder로 비밀번호 암호화 하기
 
 	 9) JSP UI 처리(Spring Security Tag Library)
 	10) Pricipal(구 authUser, @AuthUser) 처리
-	
+
 5. 로그아웃 처리
 	1) Logout Configurer 설정
     	http.logout()
@@ -44,3 +44,5 @@
 
 7.  ACL 추가 작업~~
 
+8. Exception Handling 처리
+   ex) Access Denied(403)
