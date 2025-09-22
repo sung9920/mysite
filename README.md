@@ -8,7 +8,7 @@
    - 사용안함
 3. MVC
    - Model2(Servlet Programming)
-   - ActionServlet & Action: Factory Method Design Pattern 적용
+   - ActionServlet & Action: Factory Method Design Pattern 적용 (x)
 4. Data Access
    - Repository(DAO) 구현: RAW JDBC API
    - Transaction: 지원안함
@@ -129,7 +129,7 @@
 7. Serving Static Resources
    - Spring Resource Handler: External Resources(files uploaded)
    - Spring Resource Handler: assets(images, css, js, etc..)
-   - Default Servlet Handler: disable **
+   - Default Servlet Handler: disable
 8. 기능
    - mysite05와 동일
 
