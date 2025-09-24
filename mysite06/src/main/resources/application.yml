@@ -53,6 +53,8 @@ mybatis:
 # server configuration
 server:
    port: 8080
+   servlet:
+      context-path: /
 
 # logging
 logging:
