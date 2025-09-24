@@ -6,7 +6,7 @@
 		<div id="navigation">
 			<ul>
 				<li>
-					<a href="${pageContext.request.contextPath }">
+					<a href="${pageContext.request.contextPath }/">
 						<spring:message code="navigation.li.main" />
 					</a>
 				</li>
