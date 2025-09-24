@@ -1,4 +1,4 @@
-package com.bit2025.aspect;
+package com.bit2025.mysite.aspect;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

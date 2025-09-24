@@ -28,7 +28,7 @@
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-							${fn:replace(boardVo.contents, newLine, "<br>") }
+							${fn:replace(boardVo.contents, newLine, "<br>") }					
 							</div>
 						</td>
 					</tr>
@@ -36,8 +36,8 @@
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?p=${param.p }&kwd=${param.kwd }">글목록</a>
 					<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="principal" var="authUser"/>
 						<a href="${pageContext.request.contextPath }/board/reply/${boardVo.id }?p=${param.p }&kwd=${param.kwd }">답글 달기</a>
+						<sec:authentication property="principal" var="authUser"/>
 						<c:if test="${authUser.id == boardVo.userId }">
 							<a href="${pageContext.request.contextPath }/board/modify/${boardVo.id }?p=${param.p }&kwd=${param.kwd }">글수정</a>
 						</c:if>

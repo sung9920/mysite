@@ -12,19 +12,19 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	public void join(UserVo userVo) {
 		System.out.println("Before Join: " + userVo);
-
+		
 		String password = userVo.getPassword();
 		String passwordEncoded = passwordEncoder.encode(password);
 		userVo.setPassword(passwordEncoded);
-
+		
 		userRepository.insert(userVo);
-
+		
 		System.out.println("After Join:" + userVo);
 	}
 
@@ -45,10 +45,6 @@ public class UserService {
 	}
 
 	public void updateUser(UserVo userVo) {
-		String password = userVo.getPassword();
-		String passwordEncoded = passwordEncoder.encode(password);
-		userVo.setPassword(passwordEncoded);
-
 		userRepository.update(userVo);
 	}
 
