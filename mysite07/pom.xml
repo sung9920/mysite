@@ -7,22 +7,22 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+	</parent>	
 	<groupId>com.bit2025</groupId>
 	<artifactId>mysite07</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+	
 	<properties>
 		<java.version>21</java.version>
 	</properties>
-
+	
 	<dependencies>
 		<!-- springboot devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-
+	
 		<!-- springboot web starter -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,7 +37,7 @@
 		<dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
-        </dependency>
+        </dependency>		
 
 		<!-- springboot aop starter -->
 		<dependency>
@@ -75,14 +75,14 @@
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>
 		</dependency>
-
+		
 		<!-- springboot starter for testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+		
 		<!-- jstl -->
 		<dependency>
 			<groupId>jakarta.el</groupId>
@@ -97,7 +97,7 @@
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 		</dependency>
-
+		
 		<!-- tomcat jasper -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -117,24 +117,15 @@
 			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
-
+				
 	</dependencies>
-
+	
 	<build>
 		<finalName>mysite07</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-		    	<artifactId>tomcat7-maven-plugin</artifactId>
-		    	<version>2.2</version>
-		    	<configuration>
-					<url>${tomcat.deploy.url}</url>
-					<server>tomcat-bit2025</server>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -26,18 +26,17 @@ public class MvcConfig implements WebMvcConfigurer {
 		return localeResolver;
 	}
 
-	// View Resolvers
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-		viewResolver.setExposeContextBeansAsAttributes(true);
-		viewResolver.setExposedContextBeanNames("site");
-		
-		return viewResolver;
-	}
+// View Resolvers
+//	@Bean
+//	public ViewResolver viewResolver() {
+//		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//		viewResolver.setViewClass(JstlView.class);
+//		viewResolver.setPrefix("/WEB-INF/views/");
+//		viewResolver.setSuffix(".jsp");
+//		viewResolver.setExposeContextBeansAsAttributes(true);
+//		viewResolver.setExposedContextBeanNames("site");
+//		return viewResolver;
+//	}
 	
 	// Application Context Event Listener
 	@Bean

@@ -4,7 +4,7 @@
 <mapper namespace="guestbook">
 	<select id="findAll" resultType="guestbookvo">
 		<![CDATA[
-		  select id,
+		  elect id,
 				 name,
 				 message,
 				 date_format(reg_date, '%Y-%m-%d %h:%i:%s') as regDate
