@@ -21,7 +21,7 @@ public class UserController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(@ModelAttribute UserVo userVo) {
-		return "user/join";
+		return "th/user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
@@ -29,7 +29,7 @@ public class UserController {
 		if(result.hasErrors()) {
 			//System.out.println(result.getModel());
 			model.addAllAttributes(result.getModel());
-			return "user/join";
+			return "th/user/join";
 		}
 		
 		userService.join(userVo);
@@ -38,12 +38,12 @@ public class UserController {
 
 	@RequestMapping("/joinsuccess")
 	public String joinsuccess() {
-		return "user/joinsuccess";
+		return "th/user/joinsuccess";
 	}
 
 	@RequestMapping(value="/login")
 	public String login() {
-		return "user/login";
+		return "th/user/login";
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.GET)
@@ -62,7 +62,7 @@ public class UserController {
 		UserVo userVo = userService.getUser(id);
 		
 		model.addAttribute("userVo", userVo);
-		return "user/update";
+		return "th/user/update";
 	}
 
 	@RequestMapping(value="/update", method=RequestMethod.POST)

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.bit2025.mysite.service.BoardService;
 import com.bit2025.mysite.vo.BoardVo;
 import com.bit2025.mysite.vo.UserVo;
@@ -23,6 +24,7 @@ public class BoardController {
 
 	@RequestMapping("")
 	public String index(
+		Authentication authentication,
 		@RequestParam(value="p", required=true, defaultValue="1") Integer page,
 		@RequestParam(value="kwd", required=true, defaultValue="") String keyword,
 		Model model) {
@@ -36,15 +38,17 @@ public class BoardController {
 		
 		model.addAttribute("map", map);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("principal", authentication != null ? authentication.getPrincipal() : null);
 		
-		return "board/index";
+		return "th/board/index";
 	}
 	
 	@RequestMapping("/view/{id}")
-	public String view(@PathVariable("id") Long id, Model model) {
+	public String view(Authentication authentication, @PathVariable("id") Long id, Model model) {
 		BoardVo boardVo = boardService.getContents(id);
 		model.addAttribute("boardVo", boardVo);
-		return "board/view";
+		model.addAttribute("principal", authentication != null ? authentication.getPrincipal() : null);
+		return "th/board/view";
 	}
 	
 	@RequestMapping("/delete/{id}")
@@ -61,7 +65,7 @@ public class BoardController {
 	public String modify(Authentication authentication, @PathVariable("id") Long id, Model model) {
 		BoardVo boardVo = boardService.getContents(id, ((UserVo)authentication.getPrincipal()).getId());
 		model.addAttribute("boardVo", boardVo);
-		return "board/modify";
+		return "th/board/modify";
 	}
 
 	@RequestMapping(value="/modify", method=RequestMethod.POST)	
@@ -79,7 +83,7 @@ public class BoardController {
 
 	@RequestMapping(value="/write", method=RequestMethod.GET)	
 	public String write() {
-		return "board/write";
+		return "th/board/write";
 	}
 
 	@RequestMapping(value="/write", method=RequestMethod.POST)	
@@ -101,6 +105,6 @@ public class BoardController {
 		
 		model.addAttribute("boardVo", boardVo);
 		
-		return "board/reply";
+		return "th/board/reply";
 	}	
 }
